@@ -12,6 +12,7 @@ class SendToServerTask {
 private:
     ConnectionHandler& connectionHandler;
     bool &isLoggedIn;
+    bool &gotError;
     std::vector<std::string> split(const std::string&s , char delim);
     void RegisterOrLoginMessage(std::vector<std::string> RegisterOrLoginVector);
     void shortToByte(short num, char* byteArr);
@@ -24,8 +25,8 @@ private:
 
 
 public:
-    SendToServerTask(ConnectionHandler&connectionHandler1 , bool &isLoggedIn1);
-    void run();
+    SendToServerTask(ConnectionHandler&connectionHandler1 , bool &isLoggedIn1, bool &gotError);
+    void operator()();
 };
 
 

@@ -12,14 +12,15 @@ class ReadFromServerTask {
 private:
     ConnectionHandler& connectionHandler;
     bool &isLoggedIn;
+    bool &gotError;
     short bytesToShort(char* bytesArr);
     void ErrorMessage();
     void NotificationMessage();
     void ACKMessage();
 public:
-    ReadFromServerTask(ConnectionHandler &connectionHandler1 , bool &isLoggedIn1);
+    ReadFromServerTask(ConnectionHandler &connectionHandler1 , bool &isLoggedIn1, bool &gotError);
 
-    void run();
+    void operator()();
 
 };
 

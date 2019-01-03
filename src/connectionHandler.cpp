@@ -26,6 +26,7 @@ bool ConnectionHandler::connect() {
     }
     catch (std::exception& e) {
         std::cerr << "Connection failed (Error: " << e.what() << ')' << std::endl;
+        std::cerr << "connect failed" << std::endl;
         return false;
     }
     return true;
@@ -42,6 +43,7 @@ bool ConnectionHandler::getBytes(char bytes[], unsigned int bytesToRead) {
 			throw boost::system::system_error(error);
     } catch (std::exception& e) {
         std::cerr << "recv failed (Error: " << e.what() << ')' << std::endl;
+        std::cerr << "getByte failed" << std::endl;
         return false;
     }
     return true;
@@ -58,6 +60,7 @@ bool ConnectionHandler::sendBytes(const char bytes[], int bytesToWrite) {
 			throw boost::system::system_error(error);
     } catch (std::exception& e) {
         std::cerr << "recv failed (Error: " << e.what() << ')' << std::endl;
+        std::cerr << "SendByte Failed " << std::endl;
         return false;
     }
     return true;
@@ -82,6 +85,7 @@ bool ConnectionHandler::getFrameAscii(std::string& frame, char delimiter) {
         }while (delimiter != ch);
     } catch (std::exception& e) {
         std::cerr << "recv failed (Error: " << e.what() << ')' << std::endl;
+        std::cerr << "FrameAscii Failed" << std::endl;
         return false;
     }
     return true;

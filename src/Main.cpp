@@ -1,6 +1,4 @@
-//
-// Created by yarin on 1/2/19.
-//
+
 using namespace std;
 
 
@@ -12,20 +10,21 @@ using namespace std;
 
 
 int main(int argc, char *argv[]) {
-    if (argc < 2)
+    if (argc < 3)
         return -1;
 
-    string host = argv[0];
-    short port = stoi(argv[1]);
+    string host = argv[1];
+    short port = stoi(argv[2]);
 
     ConnectionHandler connectionHandler(host, port);
     if (!connectionHandler.connect())
         return -1;
 
     bool isLoggedIn = true;
+    bool gotError = false;
 
-    ReadFromServerTask readFromServerTask(connectionHandler , isLoggedIn);
-    SendToServerTask sendToServerTask(connectionHandler, isLoggedIn);
+    ReadFromServerTask readFromServerTask(connectionHandler , isLoggedIn, gotError);
+    SendToServerTask sendToServerTask(connectionHandler, isLoggedIn, gotError);
 
     thread th1(ref(readFromServerTask));
     thread th2(ref(sendToServerTask));

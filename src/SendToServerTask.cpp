@@ -7,12 +7,12 @@ using namespace std;
 #include "algorithm"
 using namespace std;
 
-SendToServerTask::SendToServerTask(ConnectionHandler &connectionHandler1, bool &isLoggedIn1):connectionHandler(connectionHandler1), isLoggedIn(isLoggedIn1) {} {}
+SendToServerTask::SendToServerTask(ConnectionHandler &connectionHandler1, bool &isLoggedIn1, bool &gotError1):connectionHandler(connectionHandler1), isLoggedIn(isLoggedIn1), gotError(gotError1) {}
 
-void SendToServerTask::run() {
+void SendToServerTask::operator()() {
 
-    while(true) {
-        string line;
+    while(isLoggedIn) {
+        string line="";
         getline(cin, line);
         line.erase(remove(line.begin(), line.end(), '\n'), line.end());
         vector<string> result = split(line, ' ');
@@ -22,7 +22,15 @@ void SendToServerTask::run() {
             if (result[0] == "LOGOUT") {
                 result.erase(result.begin());
                 LogoutMessage();
-                break;
+                while(!gotError)
+                {
+                    if(!isLoggedIn)
+                        break;
+                }
+                if(!isLoggedIn)
+                    break;
+                if(gotError)
+                    gotError = false;
             } else {
                 if (result[0] == "FOLLOW") {
                     result.erase(result.begin());
@@ -51,6 +59,7 @@ void SendToServerTask::run() {
             }
         }
     }
+
 }
 
 
@@ -106,6 +115,7 @@ void SendToServerTask::RegisterOrLoginMessage(std::vector<std::string> RegisterO
 
     connectionHandler.sendBytes(charToSend , toSend.size());
 
+
 }
 
 
@@ -116,7 +126,17 @@ void SendToServerTask::shortToByte(short num, char *bytesArr) {
 }
 
 void SendToServerTask::LogoutMessage() {
+    char opCode[2];
+    shortToByte(3 , opCode);
+    vector<char> toSend;
+    toSend.push_back(opCode[0]);
+    toSend.push_back(opCode[1]);
 
+    char charToSend[toSend.size()];
+    for(int i = 0 ; i < toSend.size() ; i++)
+        charToSend[i] = toSend[i];
+
+    connectionHandler.sendBytes(charToSend , toSend.size());
 
 }
 
