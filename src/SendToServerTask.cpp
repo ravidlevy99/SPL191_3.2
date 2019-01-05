@@ -110,7 +110,7 @@ void SendToServerTask::RegisterOrLoginMessage(std::vector<std::string> RegisterO
     toSend.push_back('\0');
 
     char charToSend[toSend.size()];
-    for(int i = 0 ; i < toSend.size() ; i++)
+    for(int i = 0 ; i < (int)toSend.size() ; i++)
         charToSend[i] = toSend[i];
 
     connectionHandler.sendBytes(charToSend , toSend.size());
@@ -133,7 +133,7 @@ void SendToServerTask::LogoutMessage() {
     toSend.push_back(opCode[1]);
 
     char charToSend[toSend.size()];
-    for(int i = 0 ; i < toSend.size() ; i++)
+    for(int i = 0 ; i < (int)toSend.size() ; i++)
         charToSend[i] = toSend[i];
 
     connectionHandler.sendBytes(charToSend , toSend.size());
@@ -168,7 +168,7 @@ void SendToServerTask::FollowMessage(std::vector<std::string> FollowVector) {
     }
 
     char charToSend[toSend.size()];
-    for(int i = 0 ; i < toSend.size() ; i++)
+    for(int i = 0 ; i < (int)toSend.size() ; i++)
         charToSend[i] = toSend[i];
 
     connectionHandler.sendBytes(charToSend , toSend.size());
@@ -194,7 +194,7 @@ void SendToServerTask::PostMessage(std::vector<std::string> PostVector) {
     toSend.push_back('\0');
 
     char charToSend[toSend.size()];
-    for(int i = 0 ; i < toSend.size() ; i++)
+    for(int i = 0 ; i < (int)toSend.size() ; i++)
         charToSend[i] = toSend[i];
 
     connectionHandler.sendBytes(charToSend , toSend.size());
@@ -227,7 +227,7 @@ void SendToServerTask::PrivateMessage(std::vector<std::string> PrivateVector) {
     toSend.push_back('\0');
 
     char charToSend[toSend.size()];
-    for(int i = 0 ; i < toSend.size() ; i++)
+    for(int i = 0 ; i < (int)toSend.size() ; i++)
         charToSend[i] = toSend[i];
 
     connectionHandler.sendBytes(charToSend , toSend.size());
@@ -241,7 +241,7 @@ void SendToServerTask::UserListMessage() {
     toSend.push_back(opCode[1]);
 
     char charToSend[toSend.size()];
-    for(int i = 0 ; i < toSend.size() ; i++)
+    for(int i = 0 ; i < (int)toSend.size() ; i++)
         charToSend[i] = toSend[i];
 
     connectionHandler.sendBytes(charToSend , toSend.size());
@@ -263,7 +263,7 @@ void SendToServerTask::StatMessage(std::string userName) {
     toSend.push_back('\0');
 
     char charToSend[toSend.size()];
-    for(int i = 0 ; i < toSend.size() ; i++)
+    for(int i = 0 ; i < (int)toSend.size() ; i++)
         charToSend[i] = toSend[i];
 
     connectionHandler.sendBytes(charToSend , toSend.size());

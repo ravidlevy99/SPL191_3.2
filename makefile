@@ -1,23 +1,23 @@
-cmake_minimum_required(VERSION 3.12)
-project(Client)
-set(BOOST_ROOT "/path_to_boost_1_57_0")
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-SET(PLATFORM_SPECIFIC_LIBS "-lpthread")
+CFLAGS:=-c -Wall -Weffc++ -g -std=c++11 -Iinclude
+LDFLAGS:=-lboost_system -pthread -lboost_filesystem -lboost_thread
 
-find_package(Boost 1.57.0 COMPONENTS filesystem regex)
-include_directories(${Boost_INCLUDE_DIRS})
+all: BGSclient
+	g++ -o bin/BGSclient bin/connectionHandler.o bin/Main.o bin/SendToServerTask.o bin/ReadFromServerTask.o $(LDFLAGS)
 
-add_executable(Client
-        include/connectionHandler.h
-        src/connectionHandler.cpp
-        src/echoClient.cpp)
-
-target_link_libraries(Client ${Boost_LIBRARIES})
-set(CMAKE_CXX_STANDARD 11)
-target_compile_features(Client PUBLIC cxx_std_11)
-include_directories(.)
-include_directories(include)
-include_directories(src)
-target_link_libraries(Client -lpthread)
+BGSclient: bin/connectionHandler.o bin/Main.o bin/SendToServerTask.o bin/ReadFromServerTask.o
+	
+bin/connectionHandler.o: src/connectionHandler.cpp
+	g++ $(CFLAGS) -o bin/connectionHandler.o src/connectionHandler.cpp
+	
+bin/Main.o: src/Main.cpp
+	g++ $(CFLAGS) -o bin/Main.o src/Main.cpp
+	
+bin/SendToServerTask.o: src/SendToServerTask.cpp
+	g++ $(CFLAGS) -o bin/SendToServerTask.o src/SendToServerTask.cpp	
+	
+bin/ReadFromServerTask.o: src/ReadFromServerTask.cpp
+	g++ $(CFLAGS) -o bin/ReadFromServerTask.o src/ReadFromServerTask.cpp
+	
+.PHONY: clean
+clean:
+	rm -f bin/*

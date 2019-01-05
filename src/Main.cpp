@@ -14,7 +14,10 @@ int main(int argc, char *argv[]) {
         return -1;
 
     string host = argv[1];
+    if(host == "localhost")
+        host = "127.0.0.1";
     short port = stoi(argv[2]);
+
 
     ConnectionHandler connectionHandler(host, port);
     if (!connectionHandler.connect())

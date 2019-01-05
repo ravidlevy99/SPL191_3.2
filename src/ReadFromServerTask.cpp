@@ -69,13 +69,13 @@ void ReadFromServerTask::ACKMessage() {
     if(connectionHandler.getBytes(opCode , 2)){
         short MessageCode = bytesToShort(opCode);
 
-        if(MessageCode == 1 | MessageCode == 2 | MessageCode == 3 | MessageCode == 5 | MessageCode == 6)
+        if((MessageCode == 1) | (MessageCode == 2) | (MessageCode == 3) | (MessageCode == 5) | (MessageCode == 6))
         {
             cout << "ACK " << MessageCode <<endl;
             if(MessageCode == 3)
                 isLoggedIn = false;
         } else {
-            if (MessageCode == 4 | MessageCode == 7) {
+            if ((MessageCode == 4) | (MessageCode == 7)) {
                 char num[2];
                 connectionHandler.getBytes(num, 2);
                 short numOfUsers = bytesToShort(num);
@@ -87,7 +87,7 @@ void ReadFromServerTask::ACKMessage() {
                     userNames.push_back(userName);
                 }
                 cout << "ACK " << MessageCode << " " << numOfUsers << " ";
-                for (int i = 0; i < userNames.size() - 1; i++)
+                for (int i = 0; i < (int)userNames.size() - 1; i++)
                     cout << userNames[i] << " ";
                 cout << userNames[userNames.size() - 1] << endl;
             }
