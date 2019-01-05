@@ -23,8 +23,8 @@ int main(int argc, char *argv[]) {
     if (!connectionHandler.connect())
         return -1;
 
-    bool isLoggedIn = true;
-    bool gotError = false;
+    bool isLoggedIn(true);
+    bool gotError(false);
 
     ReadFromServerTask readFromServerTask(connectionHandler , isLoggedIn, gotError);
     SendToServerTask sendToServerTask(connectionHandler, isLoggedIn, gotError);
